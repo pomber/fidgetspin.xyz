@@ -91,6 +91,7 @@ const domElements = {
 
 let fidgetAlpha = 0;
 let fidgetSpeed = 0;
+let winnerAlpha: number | null = null;
 
 function deferWork(fn: () => void) {
   if ((typeof requestIdleCallback as any) !== 'undefined') {
@@ -194,7 +195,10 @@ function touchEnd() {
 
 function tick() {
   requestAnimationFrame(() => {
+    const prevFidgetSpeed = fidgetSpeed;
+
     if (touchInfo.down) {
+      winnerAlpha = null;
       if (touchInfo.radius > centerRadius) {
         touchSpeed = touchInfo.alpha - lastTouchAlpha;
         if (touchSpeed < -Math.PI) touchSpeed += 2 * Math.PI;
@@ -222,6 +226,11 @@ function tick() {
     fidgetSpeed = fidgetSpeed * 0.99;
     fidgetSpeed =
       Math.sign(fidgetSpeed) * Math.max(0, Math.abs(fidgetSpeed) - 2e-4);
+
+    if (!touchInfo.down && fidgetSpeed === 0 && prevFidgetSpeed !== 0) {
+      winnerAlpha = fidgetAlpha;
+      console.log('winner', winnerAlpha % (Math.PI * 2));
+    }
 
     const soundMagnitude = Math.abs(velocity * Math.PI / 60);
     if (soundMagnitude && !touchInfo.down) {
