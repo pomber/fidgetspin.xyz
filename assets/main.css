@@ -106,8 +106,7 @@ body {
   flex: auto;
 }
 
-#trace-slow,
-#trace-fast {
+#trace-slow, #trace-fast {
   opacity: 0.000001;
   will-change: transform;
 }
@@ -116,8 +115,7 @@ body {
   will-change: transform;
 }
 
-#trace-slow img,
-#trace-fast img {
+#trace-slow img, #trace-fast img {
   opacity: 0.1;
 }
 
@@ -225,8 +223,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translateY(-50%) translateX(-50%);
-          transform: translateY(-50%) translateX(-50%);
+  transform: translateY(-50%) translateX(-50%);
   width: 200vmax;
   height: 200vmax;
   z-index: -100;
@@ -313,7 +310,7 @@ body {
   flex-direction: row-reverse;
 }
 
-#toggle-audio{
+#toggle-audio {
   background-image: url(/assets/volume.svg);
 }
 
