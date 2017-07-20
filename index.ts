@@ -236,8 +236,10 @@ function tick() {
       Math.sign(fidgetSpeed) * Math.max(0, Math.abs(fidgetSpeed) - 2e-4);
 
     if (!touchInfo.down && fidgetSpeed === 0 && prevFidgetSpeed !== 0) {
-      winnerAlpha = fidgetAlpha;
-      console.log('winner', winnerAlpha % (Math.PI * 2));
+      winnerAlpha = fidgetAlpha % (Math.PI * 2);
+      console.log('winner', winnerAlpha);
+      const winner = getWinner(winnerAlpha, getSlices(), getParticipants());
+      alert(`And the winner is... ${winner}`);
     }
 
     const soundMagnitude = Math.abs(velocity * Math.PI / 60);
@@ -505,23 +507,45 @@ function drawParticipants(participants: string[]) {
     console.error('Missing #participants element');
     return;
   }
+
   const children = participants.map((p, i) => {
     const child = document.createElement('div');
-    child.innerText = p + i;
+    child.style.borderColor = colors[i];
+    child.innerText = p;
     return child;
   });
+
   children.forEach(c => el.appendChild(c));
   return participants;
 }
 
-(async () => {
+function getWinner(alpha: number, slices: number[], participants: string[]) {
+  const percent = alpha / (2 * Math.PI);
+  let cumulativePercent = 0;
+  for (let i = 0; i < slices.length; i++) {
+    cumulativePercent += slices[i];
+    if (percent <= cumulativePercent) {
+      return participants[i];
+    }
+  }
+  return 'WTF';
+}
+
+function getSlices() {
   const totalReads = appState.participants.reduce(
     (acc, p2) => acc + p2.reads,
     0
   );
-  const slices = appState.participants.map(p => p.reads / totalReads);
-  drawSlices(slices);
-  drawParticipants(appState.participants.map(p => p.name));
+  return appState.participants.map(p => p.reads / totalReads);
+}
+
+function getParticipants() {
+  return appState.participants.map(p => p.name);
+}
+
+(async () => {
+  drawSlices(getSlices());
+  drawParticipants(getParticipants());
   setMutedSideEffects(appState.muted);
   unlockAudio();
   tick();
