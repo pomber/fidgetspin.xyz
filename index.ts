@@ -34,6 +34,12 @@ masterVolume.connect(ac.destination);
 
 const appState = {
   pickerOpen: false,
+  participants: [
+    { name: 'Martín Spasiuk', reads: 29 + 74 },
+    { name: 'Beto Cruz', reads: 9 + 32 },
+    { name: 'Lucho Gomez', reads: 13 + 16 + 16 },
+    { name: 'Maxi Guillen', reads: 33 }
+  ],
   spinner:
     window.localStorage.getItem('fidget_spinner') ||
       './assets/spinners/base.png',
@@ -494,7 +500,12 @@ function drawSlices(slices: number[]) {
 }
 
 (async () => {
-  drawSlices([0.1, 0.7, 0.2]);
+  const totalReads = appState.participants.reduce(
+    (acc, p2) => acc + p2.reads,
+    0
+  );
+  const slices = appState.participants.map(p => p.reads / totalReads);
+  drawSlices(slices);
   setMutedSideEffects(appState.muted);
   unlockAudio();
   tick();
