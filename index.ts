@@ -32,10 +32,12 @@ const ac = new (typeof webkitAudioContext !== 'undefined'
 const masterVolume = ac.createGain();
 masterVolume.connect(ac.destination);
 
+const colors = ['#781c81', '#447cbf', '#83ba6d', '#dbab3b', '#d92120'];
+
 const appState = {
   pickerOpen: false,
   participants: [
-    { name: 'Martín Spasiuk', reads: 29 + 74 },
+    { name: 'Martin Spasiuk', reads: 29 + 74 },
     { name: 'Beto Cruz', reads: 9 + 32 },
     { name: 'Lucho Gomez', reads: 13 + 16 + 16 },
     { name: 'Maxi Guillen', reads: 33 }
@@ -471,8 +473,6 @@ function drawSlices(slices: number[]) {
     return;
   }
 
-  const colors = ['#781c81', '#447cbf', '#83ba6d', '#dbab3b', '#d92120'];
-
   if (slices.length > colors.length) {
     console.error('We need more colors!');
     return;
@@ -499,6 +499,21 @@ function drawSlices(slices: number[]) {
   });
 }
 
+function drawParticipants(participants: string[]) {
+  const el = document.querySelector('#participants');
+  if (!el) {
+    console.error('Missing #participants element');
+    return;
+  }
+  const children = participants.map((p, i) => {
+    const child = document.createElement('div');
+    child.innerText = p + i;
+    return child;
+  });
+  children.forEach(c => el.appendChild(c));
+  return participants;
+}
+
 (async () => {
   const totalReads = appState.participants.reduce(
     (acc, p2) => acc + p2.reads,
@@ -506,6 +521,7 @@ function drawSlices(slices: number[]) {
   );
   const slices = appState.participants.map(p => p.reads / totalReads);
   drawSlices(slices);
+  drawParticipants(appState.participants.map(p => p.name));
   setMutedSideEffects(appState.muted);
   unlockAudio();
   tick();
