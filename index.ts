@@ -465,7 +465,12 @@ function drawSlices(slices: number[]) {
     return;
   }
 
-  const colors = ['red', 'green', 'blue'];
+  const colors = ['#781c81', '#447cbf', '#83ba6d', '#dbab3b', '#d92120'];
+
+  if (slices.length > colors.length) {
+    console.error('We need more colors!');
+    return;
+  }
 
   slices.forEach((slice, index) => {
     const [startX, startY] = getCoordinatesForPercent(cumulativePercent);
