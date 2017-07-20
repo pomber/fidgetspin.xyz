@@ -448,7 +448,48 @@ function showPicker() {
   domElements.pickerPane.scrollTop = 0;
 }
 
+// roulette
+// thanks https://hackernoon.com/a-simple-pie-chart-in-svg-dbdd653b6936
+function getCoordinatesForPercent(percent: number) {
+  const x = Math.cos(2 * Math.PI * percent);
+  const y = Math.sin(2 * Math.PI * percent);
+  return [x, y];
+}
+
+function drawSlices(slices: number[]) {
+  let cumulativePercent = 0;
+  const svgEl = document.querySelector('#wheel-container svg');
+
+  if (!svgEl) {
+    console.error('Missing svg element');
+    return;
+  }
+
+  const colors = ['red', 'green', 'blue'];
+
+  slices.forEach((slice, index) => {
+    const [startX, startY] = getCoordinatesForPercent(cumulativePercent);
+    cumulativePercent += slice;
+    const [endX, endY] = getCoordinatesForPercent(cumulativePercent);
+    const largeArcFlag = slice > 0.5 ? 1 : 0;
+    const pathData = [
+      `M ${startX} ${startY}`, // Move
+      `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`, // Arc
+      `L 0 0` // Line
+    ].join(' ');
+
+    const pathEl = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'path'
+    );
+    pathEl.setAttribute('d', pathData);
+    pathEl.setAttribute('fill', colors[index]);
+    svgEl.appendChild(pathEl);
+  });
+}
+
 (async () => {
+  drawSlices([0.1, 0.7, 0.2]);
   setMutedSideEffects(appState.muted);
   unlockAudio();
   tick();

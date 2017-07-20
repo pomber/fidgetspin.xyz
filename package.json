@@ -35,7 +35,8 @@
     "build-tsickle": "tsickle --externs=externs.js -- -p .",
     "watch": "tsc -w",
     "watch-css": "yarn build-css -- -w",
-    "start": "http-server",
+    "serve": "http-server",
+    "start": "run-p serve watch watch-css",
     "now-start": "http-server -p 80",
     "precommit": "lint-staged",
     "test-formatting": "node scripts/prettier",
@@ -60,6 +61,7 @@
     "http-server": "^0.10.0",
     "husky": "^0.13.4",
     "lint-staged": "^3.6.0",
+    "npm-run-all": "^4.0.2",
     "postcss-cli": "^4.0.0",
     "prettier": "^1.4.2",
     "tsickle": "^0.23.3"

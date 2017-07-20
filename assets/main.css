@@ -226,7 +226,7 @@ body {
   transform: translateY(-50%) translateX(-50%);
   width: 200vmax;
   height: 200vmax;
-  z-index: -100;
+  z-index: -1;
 }
 
 .max-velocity {
