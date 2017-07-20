@@ -44,7 +44,7 @@ const appState = {
   ],
   spinner:
     window.localStorage.getItem('fidget_spinner') ||
-      './assets/spinners/base.png',
+      './assets/spinners/arrow.png',
   muted: window.localStorage.getItem('fidget_muted') === 'true' ? true : false,
   spins: window.localStorage.getItem('fidget_spins')
     ? parseInt(window.localStorage.getItem('fidget_spins')!, 10)
@@ -56,7 +56,7 @@ const appState = {
 
 const spinners = [
   {
-    path: './assets/spinners/base.png',
+    path: './assets/spinners/arrow.png',
     name: 'The Classic',
     unlockedAt: 0
   },
