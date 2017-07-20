@@ -221,6 +221,17 @@ body {
   color: #989898;
 }
 
+#wheel-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateY(-50%) translateX(-50%);
+          transform: translateY(-50%) translateX(-50%);
+  width: 200vmax;
+  height: 200vmax;
+  z-index: -100;
+}
+
 .max-velocity {
   display: flex;
   flex-direction: column;
