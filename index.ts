@@ -37,9 +37,10 @@ const colors = ['#781c81', '#447cbf', '#83ba6d', '#dbab3b', '#d92120'];
 const appState = {
   pickerOpen: false,
   participants: [
-    { name: 'Martin Spasiuk', reads: 29 + 74 },
     { name: 'Beto Cruz', reads: 9 + 32 },
+    { name: 'Martin Spasiuk', reads: 29 + 74 },
     { name: 'Lucho Gomez', reads: 13 + 16 + 16 },
+    { name: 'Gera  Massenzano', reads: 4 },
     { name: 'Maxi Guillen', reads: 33 }
   ],
   spinner:
