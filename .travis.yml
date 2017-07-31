@@ -8,12 +8,12 @@ before_script:
 script:
 - yarn run build-css
 - yarn run build-dist-js
-- echo "node_modules" > .gitignore
+# - echo "node_modules" > .gitignore
 
-# https://docs.travis-ci.com/user/deployment/pages/
-deploy:
-  provider: pages # gh-pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  on:
-    branch: master
+# # https://docs.travis-ci.com/user/deployment/pages/
+# deploy:
+#   provider: pages # gh-pages
+#   skip_cleanup: true
+#   github_token: $GITHUB_TOKEN
+#   on:
+#     branch: master

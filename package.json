@@ -28,7 +28,6 @@
   "license": "MIT",
   "scripts": {
     "build-css": "./node_modules/.bin/postcss ./assets/main.css --use ../../node_modules/autoprefixer/lib/autoprefixer.js -o main.css",
-    "build": "tsc && npm run build-css",
     "build-dist-js": "yarn run build-tsickle && yarn run closure-compile",
     "closure-compile": "cat index.js > tmp.js && cat tmp.js | java -jar ./node_modules/google-closure-compiler/compiler.jar --language_in=ECMASCRIPT6 --language_out=ECMASCRIPT5 --externs=externs.js --compilation_level ADVANCED_OPTIMIZATIONS --rewrite_polyfills=false | tee > index.js",
     "closure-compile-sw": "cat sw.js > sw_tmp.js && cat sw_tmp.js | java -jar ./node_modules/google-closure-compiler/compiler.jar --language_in=ECMASCRIPT6 --language_out=ECMASCRIPT5 --externs=sw_externs.js --compilation_level ADVANCED_OPTIMIZATIONS --rewrite_polyfills=false > sw.js",
@@ -40,7 +39,10 @@
     "now-start": "http-server -p 80",
     "precommit": "lint-staged",
     "test-formatting": "node scripts/prettier",
-    "format-code": "prettier *.ts --write --single-quote"
+    "format-code": "prettier *.ts --write --single-quote",
+    "build": "run-s build-css build-dist-js",
+    "predeploy": "yarn build",
+    "deploy": "firebase deploy"
   },
   "lint-staged": {
     "*.ts": [
